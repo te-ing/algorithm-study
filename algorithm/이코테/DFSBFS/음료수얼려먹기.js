@@ -1,30 +1,35 @@
-function solution(m) {
-  const check = Array.from(Array(m.length), () => Array(m[0].length).fill(false));
-  const direction = [1, 0, -1, 0];
+function solution(frame) {
+  const n = frame.length;
+  const m = frame[0].length;
+  let answer = 0;
 
-  let dx = 0;
-  let dy = 0;
-
-  function DFS([dy, dx], check) {
-    check[dy, dx] = true;
-    
-
-
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < m; j++) {
+      if (frame[i][j] === 0) {
+        DFS(i, j, frame);
+        frame[i][j] = 1;
+        answer++;
+      }
+    }
   }
+  function DFS(x, y, frame) {
+    if (x === -1 || x >= n || y === -1 || y >= m ) return
+    if (frame[x][y] === 0) {
+      frame[x][y] = 1;
+      DFS(x-1, y, frame);
+      DFS(x, y-1, frame);
+      DFS(x+1, y, frame);
+      DFS(x, y+1, frame);
+    }
+  }
+  
+  return answer
+};
 
-
-
-  check[i][j] = false;
-
-  return check;
-}
-
-console.log(solution([
+const iceFrame = [
   [0, 0, 1, 1, 0],
   [0, 0, 0, 1, 1],
   [1, 1, 1, 1, 1],
   [0, 0, 0, 0, 0]
-])) // 3
-
-
-                  
+];
+console.log(solution(iceFrame)) // 3
