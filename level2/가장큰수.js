@@ -1,9 +1,19 @@
 function solution(numbers) {
   let answer = '';
-  let temp = numbers.map((a) => String(a)).sort((a, b) => b + a - (a + b));
+  let temp;
+  const _numbers = [...numbers]
+
+  for (let i = 0; i < numbers.length - 1; i++) {
+    temp = numbers[i]
+    for (let j = 1; j < numbers.length; j++) {
+      if (Number(String(numbers[i])[0]) === Number(String(numbers[j])[0])) {
+        temp = Number(String(numbers[i])[0]) === Number(String(numbers[j])[0])
+      }
+    }
+    answer += numbers[i];
+  }
   
-  answer = temp[0] === "0" ? "0" : temp.join("")
-  
+  numbers.map(v => answer += v);
   
   return answer;
 }
