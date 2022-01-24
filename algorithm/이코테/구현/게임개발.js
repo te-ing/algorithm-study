@@ -1,37 +1,52 @@
 function solution(l, m) {
-  let x = l[0];
-  let y = l[1];
-  let d = l[2];
-  let nx;
-  let ny;
-  const width = m[0].length;
   const height = m.length;
-  
-  const dx = [-1, 0, 1, 0]; 
-  const dy = [0, 1, 0, -1]; 
-  
-  function turnLeft(direction) {
-    direction === 0 ? direction = 3 : direction--;
-    return direction
-  }
-  
+  const width = m[0].length;
+  const visited = Array.from({ length: height }, () => Array(width).fill(0));
+  const dx = [-1, 0, 1, 0];
+  const dy = [0, 1, 0, -1];
+
+  let d = l[2]; // 방향
+  let x = l[0]; // x 좌표
+  let y = l[1]; // y 좌표
+  let nx; // 이동좌표
+  let ny;
+
+  visited[x][y] = 1;
   let count = 1;
-  turnTime = 0;
+  let turn_time = 0;
+  
   while (true) {
-    turnLeft(d);
+    d === 0 ? d = 3 : d -= 1;
     nx = x + dx[d];
-    ny = y + dy[d];
+    ny = y + dy[d]
+    if (visited[nx][ny] === 0 && m[nx][ny] === 0) {
+      visited[nx][ny] = 1;
+      x = nx;
+      y = ny;
+      count++;
+      turn_time = 0;
+      continue
+    } else {
+      turn_time++;
+    }
+    
+    if (turn_time === 4) {
+      nx = x - dx[d];
+      ny = y - dy[d];
+      turn_time = 0;
+      if (m[nx][ny] === 0) {
+        x = nx;
+        y = ny;
+      } else {
+        return count
+      }
+    }
   }
 }
 
 console.log(solution([1, 1, 0], [ // 북 0 동 1 남 2 서 3
-  [1, 1, 0, 1], // 0 육지 1 바다
-  [1, 1, 1, 1],
+  [1, 1, 1, 1], // 0 육지 1 바다
   [1, 0, 0, 1],
+  [1, 1, 0, 1],
   [1, 1, 1, 1]
 ])) // 3
-
-// 왼쪽방향부터 차례대로 갈곳 정하고 이동
-// 모든 방향이 이미 가본 칸이거나 바다라면 방향만 유지한 채 한칸 뒤로 이동 
-// 이때 뒤쪽 방향이 바다면 종료
-

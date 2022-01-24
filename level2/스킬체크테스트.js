@@ -1,21 +1,27 @@
-function solution(k, dungeons) {
-  var answer = 0;
-  
-    function DFS(sum, L){
-      if(sum===0) return;
-      else {
-        for (let i = L; i < dungeons.length; i++) {
-          if (sum <= dungeons[L][0]) {
-            answer++;
-            sum -= dungeons[L][1];
-          }
-          DFS(sum, i + 1);
+function solution(number, k) {
+  let answer = [];
+  const check = Array.from({ length: number.length }, () => false);
+  let numbers = ""
+
+  function DFS(num, check) {
+    console.log(num);
+    if (num.length === number.length - k) {
+      answer.push(num)
+      return
+    } else {
+      for (let i = 0; i < number.length; i++) {
+        if (!check[i]) {
+          check[i] = true;
+          DFS(num + number.substring(i, i + 1), check)
         }
       }
     }
-    DFS(k, 0);
-  
+  }
+  DFS(numbers, check);
+
   return answer;
 }
 
-console.log(solution(80,	[[80,20],[50,40],[30,10]])) // 3
+// console.log(solution("1924",	2)); // "94"
+console.log(solution("1231234",	3)); // "3234"
+// console.log(solution("4177252841",	4)); // "775841"

@@ -14,7 +14,8 @@ function solution(graph) {
         if (nx < 0 || ny < 0 || nx >= n || ny >= m || graph[nx][ny] === 0) continue
         if (graph[nx][ny] === 1) {
           graph[nx][ny] = graph[x][y] + 1
-          queue.push([nx,ny])
+          queue.push([nx, ny])
+          if (nx === n-1 && ny === m-1) return graph[n-1][m-1]
         }
       }
     }
@@ -30,5 +31,3 @@ console.log(solution([
   [1, 1, 1, 1, 1, 1],
   [1, 1, 1, 1, 1, 1]
 ])); // 10
-
-
