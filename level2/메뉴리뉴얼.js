@@ -1,5 +1,46 @@
 function solution(orders, course) {
   let answer = [];
+  let array = [];
+  let object = {};
+
+  const combi = (order, n) => {
+    if (order.length < n) return;
+    let check = Array.from({ length: order.length }, () => false);
+    const combiArray = [];
+    
+    const DFS = (order, n, combi) => {
+      if (combi.length === n) {
+        check = Array.from({ length: order.length }, () => false);
+        combiArray.push(combi);
+      } else {
+        for (let i = 0; i < check.length; i++) {
+          if (!combi.includes(order[i]) && !check[i]) {
+            DFS(order, n, combi+order[i])
+            check[i] = true;
+          }
+        }
+      }
+    }
+    DFS(order, n, "");
+    return ([...new Set(combiArray)]);
+  }
+  for (let i = 0; i < course.length; i++) {
+    for (let order of orders) {
+      array.push(combi(order, course[i]));
+    }
+  }
+  
+  for (let i = 0; i < array.length; i++){
+    if(array[i]) {
+      for (let x of array[i]) {
+        if (!object[x])
+          object[x] = 1;
+        else object[x]++;
+      }
+    }
+  }
+  
+  console.log(Object.values(object));
 
 
   return answer;
