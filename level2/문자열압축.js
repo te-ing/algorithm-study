@@ -1,12 +1,8 @@
 function solution(s) {
   let answer = [];
   let cnt = 1;
-  for (let i = 1; i <= s.length / 2+1; i++) {
+  for (let i = 1; i <= s.length / 2; i++) {
     let words = "";
-    if (s.substring(0, i) !== s.substring(i, i * 2)) {
-      answer.push(s.length)
-      continue
-    }
     let _s = s.slice();
     while (_s.length > i) {
       let word = _s.substring(0, i);
@@ -32,6 +28,7 @@ function solution(s) {
   return Math.min(...answer);
 }
 
+console.log(solution("aababacdacd")); //aabab2acd 9
 // console.log(solution("aabbaccc")); // 7
 // console.log(solution("abcabcdede")); // 8 
 // console.log(solution("ababcdcdababcdcd")); // 9
