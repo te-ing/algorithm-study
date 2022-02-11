@@ -1,36 +1,27 @@
 function solution(input) {
   input = input.split(`\n`).map(s => s.split(" ").map(Number));
   const [N, M, K, X] = input[0]
-  const road = input.slice(1);
-  
-  const graph = Array.from({ length: N + 1 }, () => []);
+  const array = input.slice(1);
+
   const distance = Array.from({ length: N + 1 }, () => -1);
-  
-  road.forEach(([A, B]) => {
-    graph[A].push(B); // 노드 별 갈 수 있는 지점 
-  });
+  const graph = Array.from({ length: N + 1 }, () => []);
 
-  function BFS(graph, start, distance) {
-    const queue = [start];
-    distance[start] = 0;
-    while (queue.length) {
-      const now = queue.shift(); // 현재 노드(시작점)
-      graph[now].forEach((nextNode) => { 
-        if (distance[nextNode] === -1) { // 만약 다음 지점의 최단거리가 정해지지 않았다면
-          distance[nextNode] = distance[now] + 1; // 다음 갈 곳의 최단거리는 지금 거리보다 + 1
-          queue.push(nextNode); //  큐에 다음 이동지점을 넣는다.
-        }
-      });
-    }
-  }
-  BFS(graph, X, distance);
+  distance[X] = 0;
+  array.forEach(([from, to]) => graph[from].push(to));
 
-  if (distance.includes(K)) {
-    for (let i = 0; i <= N; i++) {
-      if (distance[i] === K) {
-        console.log(i)
+  const queue = [X];
+  while (queue.length) {
+    const now = queue.shift();
+    graph[now].forEach((next) => {
+      queue.push(next);
+      if (distance[next] === -1) {
+        distance[next] = distance[now] + 1;
       }
-    }
+    })
+  }
+  
+  if (distance.includes(K)) {
+    distance.forEach((n, index)=> n===K && console.log(index))
   } else console.log(-1)
 }
 
