@@ -4,16 +4,16 @@ const fs = require('fs');
 const stdin = (process.platform === 'linux'
   ? fs.readFileSync('/dev/stdin').toString()
   : 
-`6 5 6
+`5 5 3
 5 4
-4 6
-2 3
+5 2
+1 2
+3 4
 3 1
-1 6
 `
 /**
- * 6 1 3 2 4 5
- * 6 1 4 3 5 2
+3 1 2 5 4
+3 1 4 2 5
 */
   
 /* 
@@ -64,6 +64,7 @@ map.map(([a, b]) => {
   graph[a].push(b);
   graph[b].push(a);
 });
+graph.map(v => v.sort((a, b) => a - b));
 
 function DFS(v) {
   if (!visited[v]) {
@@ -83,16 +84,13 @@ function BFS(start) {
   queue.push(start)
   while (queue.length) {
     const v = queue.shift();
-    if (visited[v]) continue;
-    visited[v] = 1;
-    answer += (v + " ");
-    for (let [a, b] of map) {
-      if (v === a) {
-        queue.push(b);
-      } else if (v === b) {
-        queue.push(a);
-      } 
-    }
+    if (!visited[v]) {
+      visited[v] = 1;
+      for (let x of graph[v]) {
+        queue.push(x);
+      }
+      answer += (v + " ");
+    };
   }
   return answer.trim()
 }
