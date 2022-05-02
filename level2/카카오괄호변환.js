@@ -1,5 +1,5 @@
 function solution(p) {
-  if (!p) return;
+  if (!p) return
 
   function balance(s) {
     let left = 0;
@@ -25,31 +25,33 @@ function solution(p) {
     else return true
   }
 
+  function formatReverse(s) {
+    let result = "";
+    for (let x of s.slice(1, -1)) {
+      if (x === "(") result += ")"
+      else result += "("
+    }
+    return result
+  }
+
   function formatting(p) {
+    if(!p) return ""
     let result = ""
     const arr = balance(p);
-    if (arr.length > 1) {
       if (correct(arr[0])) {
         result += arr[0] + formatting(arr[1]);
       } else {
         result += "(";
-        result += formatting(arr[1])
+        result += formatting(arr[1]);
         result += ")";
-        result += arr[0].split('').reverse().slice(1, -1).join('');
-      }
-    } else {
-      if (correct(arr[0])) {
-        result += arr[0]
-      } else {
-        result += "()"+arr[0].split('').reverse().slice(1, -1).join('');
-      }
+        result += formatReverse(arr[0]);
     }
     return result
   }
+    
   return formatting(p);
 }
 
-// console.log(solution("(()())()")) //   "(()())()"
-// console.log(solution(")(")) // "()"
-console.log(solution("()))((()")) //   "()(())()"
-// console.log(solution(")(()()")) //  "(()())"
+console.log(solution("(()())()")) //   "(()())()"
+console.log(solution(")(")) // "()"
+console.log(solution("()))((()")) //   "()(())()" 
