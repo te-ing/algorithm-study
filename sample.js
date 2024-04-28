@@ -1,14 +1,10 @@
 /**
  * @링크
- * 
- * @문제
- * 
  * @풀이방식
- * 
  * @다른사람의_풀이
  */
-const test = (n) => {
+function solution(s) {
+  return s
 }
 
-console.log(test(15) === 25);
-console.log(test(40) === 76);
+console.log(solution("a") === "a");
