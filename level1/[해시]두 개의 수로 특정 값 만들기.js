@@ -12,7 +12,7 @@
  * @다른사람의_풀이
  * 해시를 활용하여 계산
  * 
-*/
+*/주
 // function solution(arr, k) {
 //   const n = arr.length;
 //   for (let i = 0; i < n-1; i++) {
