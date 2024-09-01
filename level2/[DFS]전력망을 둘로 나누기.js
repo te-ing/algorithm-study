@@ -1,3 +1,4 @@
+// https://school.programmers.co.kr/learn/courses/30/lessons/86971
 function getNetworkNumber(n, wires) {
   const graph = Array.from({ length: n + 1 }, () => []);
   const visited = Array.from({ length: n + 1 }, isVisited => false);
@@ -44,3 +45,39 @@ function solution(n, wires) {
 console.log(solution(9,	[[1,3],[2,3],[3,4],[4,5],[4,6],[4,7],[7,8],[7,9]])) // 3
 console.log(solution(4,	[[1,2],[2,3],[3,4]])) // 0
 console.log(solution(7,	[[1,2],[2,7],[3,7],[3,4],[4,5],[6,7]])) // 1
+
+/** 코딩테스트 합격자 되기 풀이 */
+function solution(n, wires) {
+  const graph = Array.from({length: n+1}, ()=> []);
+  
+  for(const [x,y] of wires) {
+      graph[x].push(y);
+      graph[y].push(x);
+  }
+  
+  const DFS = (node, parent) => {
+      let cnt=1;
+      for(const child of graph[node]){
+          if(child !== parent){
+              cnt += DFS(child, node)
+          }
+      }
+      return cnt;
+  }
+  
+  let minDiff = Infinity;
+  for(const [a,b] of wires) {
+      graph[a].splice(graph[a].indexOf(b), 1);
+      graph[b].splice(graph[b].indexOf(a), 1);
+      
+      const cntA= DFS(a,b);
+      const cntB = n - cntA;
+      
+      minDiff = Math.min(minDiff, Math.abs(cntA - cntB));
+      
+      graph[a].push(b);
+      graph[b].push(a);
+  }
+  
+  return minDiff;
+}
