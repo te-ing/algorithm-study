@@ -1,0 +1,67 @@
+/**
+ * @링크
+ * https://school.programmers.co.kr/learn/courses/30/lessons/388353
+
+ * @풀이방식
+ * BFS를 사용하여 지게차로 꺼낼 수 있는 짐을 queue에 저장
+ * 모든 짐을 BFS로 검사 후, queue에 저장된 짐을 꺼내도록 구현
+ * @다른사람의_풀이
+ * 대체로 동일
+*/
+function solution(storage, requests) {
+    let answer = 0;
+    const n = storage.length;
+    const m = storage[0].length;
+    const dx = [1,0,-1,0];
+    const dy = [0,1,0,-1];
+    storage = storage.map((v) => v.split(""));
+    const map = Array.from({length: n}, ()=>Array(m).fill(false));
+    
+    const car = (target, map) => {
+        const visit = Array.from({length: n}, ()=>Array(m).fill(false));
+        const queue = [target];
+        while(queue.length){
+            const [x,y] = queue.pop();
+            for(let i=0; i<4; i++){
+                const nx = x+dx[i];
+                const ny = y+dy[i];
+                if(nx<0 || ny<0 || nx>=n || ny>=m){
+                    return true;
+                }
+                if(map[nx][ny] === true && visit[nx][ny] === false){
+                    visit[nx][ny] = true
+                    queue.push([nx,ny]);
+                }
+            }
+        }
+        return false;
+    }
+    for(let i=0; i<requests.length; i++){
+        const x = requests[i];
+        const queue = [];
+        for(let j=0; j<storage.length; j++){
+            storage[j].forEach((k,i)=> {
+                if(x.length>1){
+                    if(k === x[0]) queue.push([j,i]);
+                } else {
+                    if(k === x[0] && car([j,i], map)) queue.push([j,i]);
+                }
+            })
+        }
+        for(const [tx, ty] of queue){
+            map[tx][ty] = true;
+            storage[tx][ty] = null;
+        }
+    }
+    
+    for(let i=0; i<storage.length; i++){
+        storage[i].forEach((k,j)=> {
+            if(storage[i][j] !== null) answer++;
+        })
+    }
+    
+    return answer;
+}
+
+console.log(solution(["AZWQY", "CAABX", "BBDDA", "ACACA"], ["A", "BB", "A"]) === 11);
+console.log(solution(["HAH", "HBH", "HHH", "HAH", "HBH"], ["C", "B", "B", "B", "B", "H"]) === 4);
