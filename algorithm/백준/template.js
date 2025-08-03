@@ -1,8 +1,11 @@
-// https://www.acmicpc.net/problem/1652
+/** https://www.acmicpc.net/problem/1747
+nodemon algorithm/백준/template.js
+*/
 const fs = require('fs');
-const stdin = (process.platform === 'linux'
-  ? fs.readFileSync('/dev/stdin').toString()
-  : `5
+const stdin = (
+  process.platform === 'linux'
+    ? fs.readFileSync('/dev/stdin').toString()
+    : `5
 ....X
 `
 ).split('\n');
