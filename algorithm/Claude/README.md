@@ -40,5 +40,5 @@ Claude/
 ## 실행 방법
 
 ```bash
-node algorithm/Claude/BFS/미로탈출_Lv2.js
+node --watch algorithm/Claude/BFS/미로탈출_Lv2.js
 ```
